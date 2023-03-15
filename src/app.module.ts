@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { UserModule } from './user/user.module';
 import { CommonModule } from './common/common.module';
+import { RepositoryModule } from './repository/repository.module';
 
 import { JoiValidatonSchema } from './common/validators/joi.validator';
 @Module({
@@ -22,6 +24,7 @@ import { JoiValidatonSchema } from './common/validators/joi.validator';
     }),
     UserModule,
     CommonModule,
+    RepositoryModule,
   ],
   controllers: [],
   providers: [],
