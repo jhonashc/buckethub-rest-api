@@ -3,11 +3,14 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  OneToMany,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
-export class User {
+import { RepositoryEntity } from '../../repository/entities/repository.entity';
+
+@Entity('user')
+export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -40,6 +43,9 @@ export class User {
     nullable: true,
   })
   avatarUrl: string;
+
+  @OneToMany(() => RepositoryEntity, (repository) => repository.author)
+  repositories: RepositoryEntity[];
 
   @Column({
     type: 'boolean',
