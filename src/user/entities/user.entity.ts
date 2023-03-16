@@ -48,6 +48,13 @@ export class UserEntity {
   repositories: RepositoryEntity[];
 
   @Column({
+    type: 'text',
+    array: true,
+    default: ['user'],
+  })
+  roles: string[];
+
+  @Column({
     type: 'boolean',
     default: true,
   })
