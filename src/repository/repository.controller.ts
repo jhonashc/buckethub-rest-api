@@ -6,40 +6,53 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { RepositoryService } from './repository.service';
-import { CreateRepositoryDto } from './dto/create-repository.dto';
-import { UpdateRepositoryDto } from './dto/update-repository.dto';
 
-@Controller('repository')
+import { CreateRepositoryDto, UpdateRepositoryDto } from './dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
+
+import { RepositoryEntity } from './entities/repository.entity';
+
+@Controller('repositories')
 export class RepositoryController {
   constructor(private readonly repositoryService: RepositoryService) {}
 
   @Post()
-  create(@Body() createRepositoryDto: CreateRepositoryDto) {
-    return this.repositoryService.create(createRepositoryDto);
+  createRepository(
+    @Body() createRepositoryDto: CreateRepositoryDto,
+  ): Promise<RepositoryEntity> {
+    return this.repositoryService.createRepository(createRepositoryDto);
   }
 
   @Get()
-  findAll() {
-    return this.repositoryService.findAll();
+  getRepositories(
+    @Query() paginationDto: PaginationDto,
+  ): Promise<RepositoryEntity[]> {
+    return this.repositoryService.getRepositories(paginationDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.repositoryService.findOne(+id);
+  getRepositoryById(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<RepositoryEntity> {
+    return this.repositoryService.getRepositoryById(id);
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
+  updateRepositoryById(
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateRepositoryDto: UpdateRepositoryDto,
-  ) {
-    return this.repositoryService.update(+id, updateRepositoryDto);
+  ): Promise<RepositoryEntity> {
+    return this.repositoryService.updateRepositoryById(id, updateRepositoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.repositoryService.remove(+id);
+  deleteRepositoryById(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<RepositoryEntity> {
+    return this.repositoryService.deleteRepositoryById(id);
   }
 }
