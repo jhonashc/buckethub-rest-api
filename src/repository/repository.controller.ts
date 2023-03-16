@@ -11,8 +11,13 @@ import {
 } from '@nestjs/common';
 import { RepositoryService } from './repository.service';
 
+import { Auth } from '../auth/decorators';
+
 import { CreateRepositoryDto, UpdateRepositoryDto } from './dto';
+
 import { PaginationDto } from '../common/dto/pagination.dto';
+
+// import { ValidRoles } from '../auth/interfaces';
 
 import { RepositoryEntity } from './entities/repository.entity';
 
@@ -21,6 +26,7 @@ export class RepositoryController {
   constructor(private readonly repositoryService: RepositoryService) {}
 
   @Post()
+  @Auth()
   createRepository(
     @Body() createRepositoryDto: CreateRepositoryDto,
   ): Promise<RepositoryEntity> {
@@ -42,6 +48,7 @@ export class RepositoryController {
   }
 
   @Patch(':id')
+  @Auth()
   updateRepositoryById(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateRepositoryDto: UpdateRepositoryDto,
@@ -50,6 +57,7 @@ export class RepositoryController {
   }
 
   @Delete(':id')
+  @Auth()
   deleteRepositoryById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<RepositoryEntity> {

@@ -11,8 +11,12 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 
+import { Auth } from '../auth/decorators';
+
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
+
+import { ValidRoles } from '../auth/interfaces';
 
 import { UserEntity } from './entities/user.entity';
 
@@ -21,6 +25,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @Auth(ValidRoles.admin)
   createUser(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
     return this.userService.createUser(createUserDto);
   }
@@ -36,6 +41,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @Auth(ValidRoles.admin)
   updateUserById(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -44,6 +50,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   deleteUserById(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
     return this.userService.deleteUserById(id);
   }

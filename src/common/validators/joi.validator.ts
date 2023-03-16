@@ -8,4 +8,5 @@ export const JoiValidatonSchema = Joi.object({
   DB_NAME: Joi.string().default('postgres'),
   DB_USERNAME: Joi.string().default('postgress'),
   DB_PASSWORD: Joi.string().default('password'),
+  JWT_SECRET: Joi.string(),
 });

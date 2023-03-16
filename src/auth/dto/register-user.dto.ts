@@ -1,12 +1,6 @@
-import {
-  IsArray,
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateUserDto {
+export class RegisterUserDto {
   @IsString()
   @IsNotEmpty()
   firstName: string;
@@ -25,8 +19,4 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   avatarUrl?: string;
-
-  @IsArray()
-  @IsOptional()
-  roles: string[];
 }
